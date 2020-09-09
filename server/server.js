@@ -21,7 +21,6 @@ const pool = new Pool({
         port: 5432,
         max: 12,
         idleTimeoutMillis: 20000
-
     }) // end pool setup
 
 
@@ -32,3 +31,26 @@ const pool = new Pool({
 app.listen(port, () => {
         console.log('server up:', port);
     }) // end server ip
+
+
+app.get('/books', (req, res) => {
+        console.log('in /books GET');
+        const queryString = `SELECT * FROM "books"`;
+        pool.query(queryString).then((results) => {
+                res.send(results.rows);
+            }).catch((err) => {
+                res.sendStatus(500);
+            }) // end query
+    }) // end /books GET
+
+
+app.post('/books', (req, res) => {
+        console.log('in /books POST, req.body');
+        const queryString = `INSERT INTO "books" (title, author, published) VALUES ($1, $2, $3)`;
+        pool.query(queryString, [req, body.title, req.body.author, req.body.published]).then((results) => {
+                res.sendStatus(201);
+            }).catch((err) => {
+                console.log(err);
+                res.sendStatus(500);
+            }) //end query
+    }) //end /books POST
