@@ -59,7 +59,7 @@ app.post('/books', (req, res) => {
 */
 
 app.post('/books', (req, res) => {
-    console.log('in /songs POST', req.body);
+    console.log('in /books POST', req.body);
     const queryString = `INSERT INTO "books"(title, author, published) VALUES($1, $2, $3)`;
     pool.query(queryString, [req.body.title, req.body.author, req.body.published]).then((results) => {
         res.sendStatus(201);

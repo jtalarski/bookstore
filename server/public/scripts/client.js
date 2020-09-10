@@ -21,16 +21,16 @@ function addBook() {
             data: objectToSend
         }).then(function(response) {
             console.log('back from POST with:', response);
-            getBooks();
             // clear inputs
-            //$('#titleIn').val('');
-            //$('#authorIn').val('');
-            //$('#publishedIn').val('');
+            $('#titleIn').val('');
+            $('#authorIn').val('');
+            $('#publishedIn').val('');
+            getBooks();
         }).catch(function(err) {
             console.log(err);
             alert('error');
         }) // end AJAX post
-} // end addBooks
+} // end addBook
 
 
 
