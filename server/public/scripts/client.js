@@ -2,12 +2,35 @@ $(document).ready(onReady);
 
 function onReady() {
     console.log("JQ in the house@");
+    $(document).on('click', '#addBtn', addBook);
     getBooks();
 }
 
 function addBook() {
     console.log('in addBook');
-}
+
+    let objectToSend = {
+            title: $('#titleIn').val(),
+            author: $('#authorIn').val(),
+            published: $('#publishedIn').val()
+        } // end obejctToSend
+
+    $.ajax({
+            method: "POST",
+            url: '/books',
+            data: objectToSend
+        }).then(function(response) {
+            console.log('back from POST with:', response);
+            getBooks();
+            // clear inputs
+            //$('#titleIn').val('');
+            //$('#authorIn').val('');
+            //$('#publishedIn').val('');
+        }).catch(function(err) {
+            console.log(err);
+            alert('error');
+        }) // end AJAX post
+} // end addBooks
 
 
 

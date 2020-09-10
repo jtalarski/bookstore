@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const pg = require('pg'); // this is what lets us talk to db
+const { response } = require('express');
 
 // uses
 app.use(express.static('server/public'));
@@ -43,14 +44,27 @@ app.get('/books', (req, res) => {
             }) // end query
     }) // end /books GET
 
-
+/*
 app.post('/books', (req, res) => {
-        console.log('in /books POST, req.body');
+        console.log('in /books POST', req.body);
         const queryString = `INSERT INTO "books" (title, author, published) VALUES ($1, $2, $3)`;
-        pool.query(queryString, [req, body.title, req.body.author, req.body.published]).then((results) => {
+        pool.query(queryString, [req.body.title, req.body.author, req.body.published])
+            .then((results) => {
                 res.sendStatus(201);
             }).catch((err) => {
                 console.log(err);
                 res.sendStatus(500);
             }) //end query
     }) //end /books POST
+*/
+
+app.post('/books', (req, res) => {
+    console.log('in /songs POST', req.body);
+    const queryString = `INSERT INTO "books"(title, author, published) VALUES($1, $2, $3)`;
+    pool.query(queryString, [req.body.title, req.body.author, req.body.published]).then((results) => {
+        res.sendStatus(201);
+    }).catch((err) => {
+        console.log(err);
+        response.sendStatus(500);
+    })
+})
